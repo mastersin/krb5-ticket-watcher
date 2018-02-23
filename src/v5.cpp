@@ -360,6 +360,8 @@ v5::getRealms(krb5_context kcontext)
 		qWarning("krb5_realm_iterator_create failed: %d", retval);
 		return list;
 	}
+	if (!defRealm.isEmpty())
+		list.push_front(defRealm);
 	while (iter)
 	{
 		if ((retval = krb5_realm_iterator(kcontext, &iter, &realm)))
