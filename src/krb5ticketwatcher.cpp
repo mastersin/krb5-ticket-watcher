@@ -212,7 +212,8 @@ Ktw::initTray()
 {
 	QPixmap pix;
 	pix.loadFromData(trayimage, sizeof( trayimage ), "PNG");
-	tray = new QSystemTrayIcon(QIcon(pix), this);
+	//tray = new QSystemTrayIcon(QIcon(pix), this);
+	tray = new QSystemTrayIcon(QIcon::fromTheme("channel-secure-symbolic", QIcon(pix)), this);
 	connect(tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 	        SLOT(trayClicked(QSystemTrayIcon::ActivationReason)));
 	setTrayToolTip("");
