@@ -419,7 +419,24 @@ Ktw::initWorkflow(int type)
 
 			break;
 		default:
-			if(type != 0)
+			if(type == 69)
+			{
+				krb5_creds my_creds;
+				if( !v5::getTgtFromCcache(kcontext, &my_creds) )
+				{
+					char *r = NULL;
+					krb5_get_default_realm(kcontext, &r);
+					QString defRealm(r);
+					krb5_free_default_realm(kcontext, r);
+					// check for authorization
+					if( !defRealm.isEmpty() ) {
+						kinit();
+					}
+				}
+				retval = 0;
+				break;
+			}
+			else if(type != 0)
 			{
 				retval = v5::renewCredential(kcontext, kprincipal, &tgtEndtime);
 				if(!retval)

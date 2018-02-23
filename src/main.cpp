@@ -85,6 +85,6 @@ int main( int argc, char **argv )
 	QApplication::setQuitOnLastWindowClosed(false);
 
 	Ktw w( argc, argv );
-	w.initWorkflow();
+	w.initWorkflow(69);
 	return app.exec();
 }
