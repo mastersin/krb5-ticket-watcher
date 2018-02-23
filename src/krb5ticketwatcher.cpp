@@ -49,6 +49,7 @@
 #include "pwchangedialog.h"
 #include "kinitdialog.h"
 
+#include <unistd.h>
 #include <pwd.h>
 #include <unistd.h>
 
