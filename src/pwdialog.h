@@ -21,6 +21,10 @@ public:
 		setModal(modal);
 		setAccessibleName(name);
 		setupUi(this);
+		QWidget *wnd = window();
+		if( wnd ) {
+		    wnd->setWindowFlags(wnd->windowFlags() | Qt::WindowStaysOnTopHint);
+		}
 	}
 	
 	~PWDialog(){}
