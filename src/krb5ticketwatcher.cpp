@@ -1375,7 +1375,7 @@ Ktw::printtime(time_t tv)
 	if (!krb5_timestamp_to_sfstring((krb5_timestamp) tv,
 	                                timestring, 29, &fill))
 	{
-		return timestring;
+		return QString::fromLocal8Bit(timestring);
 	}
 	return "";
 }
