@@ -15,7 +15,7 @@ class PWDialog : public QDialog, private Ui::PWDialog
 
 public:
     PWDialog( QWidget* parent = 0, const char* name = 0,
-             bool modal = FALSE, Qt::WindowFlags fl = 0 )
+             bool modal = false, Qt::WindowFlags fl = 0 )
     	: QDialog(parent, fl)
 	{
 		setModal(modal);

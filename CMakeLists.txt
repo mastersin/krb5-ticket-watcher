@@ -45,7 +45,10 @@ SET( QT_USE_QTNETWORK TRUE )
   
 # this command finds Qt4 libraries and sets all required variables
 # note that it's Qt4, not QT4 or qt4
-FIND_PACKAGE( Qt4 REQUIRED )
+FIND_PACKAGE( Qt5Core REQUIRED )
+FIND_PACKAGE( Qt5Network REQUIRED )
+FIND_PACKAGE( Qt5Gui REQUIRED )
+FIND_PACKAGE( Qt5Widgets REQUIRED )
   
 FIND_PACKAGE( Gettext REQUIRED )
 IF (GETTEXT_FOUND)
@@ -57,13 +60,13 @@ ENDIF (GETTEXT_FOUND)
 
 # add some useful macros and variables
 # (QT_USE_FILE is a variable defined by FIND_PACKAGE( Qt4 ) that contains a path to CMake script)
-INCLUDE( ${QT_USE_FILE} )
+#INCLUDE( ${QT_USE_FILE} )
   
 # this will run uic on .ui files:
-QT4_WRAP_UI( KTW_UI_HDRS ${KTW_UIS} OPTIONS -tr ki18n)
+QT5_WRAP_UI( KTW_UI_HDRS ${KTW_UIS} OPTIONS -tr ki18n)
   
 # and finally this will run moc:
-QT4_WRAP_CPP( KTW_MOC_SRCS ${KTW_MOC_HDRS} )
+QT5_WRAP_CPP( KTW_MOC_SRCS ${KTW_MOC_HDRS} )
   
 # we need this to be able to include headers produced by uic in our code
 # (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
@@ -96,6 +99,7 @@ ADD_CUSTOM_TARGET(backupclean find ${CMAKE_SOURCE_DIR} -name "*~" -print0 | xarg
 
 # here we instruct CMake to build "krb5-ticket-watcher" executable from all of the source files
 ADD_EXECUTABLE( krb5-ticket-watcher ${KTW_SRCS} ${KTW_MOC_SRCS} ${KTW_RC_SRCS} ${KTW_UI_HDRS} )
+qt5_use_modules(krb5-ticket-watcher Core Gui Widgets Network)
   
 SET (LIBS ${LIBS} ${QT_LIBRARIES})
 

@@ -29,30 +29,31 @@
 
 #include <QtGui>
 #include <QApplication>
+#include <QMessageBox>
 
 #include "krb5ticketwatcher.h"
 
-void myMessageOutput( QtMsgType type, const char *msg )
+void myMessageOutput( QtMsgType type, const QMessageLogContext &context, const QString &msg )
 {
 	switch ( type ) {
 		case QtDebugMsg:
 #ifdef DEBUG			
-			fprintf( stderr, "Debug: %s\n", msg );
+			fprintf( stderr, "Debug: %s\n", qPrintable(msg) );
 #endif
 			break;
 		case QtWarningMsg:
-			fprintf( stderr, "Warning: %s\n", msg );
+			fprintf( stderr, "Warning: %s\n", qPrintable(msg) );
 			break;
 		case QtFatalMsg:
-			fprintf( stderr, "Fatal: %s\n", msg );
+			fprintf( stderr, "Fatal: %s\n", qPrintable(msg) );
 			abort();                    // deliberately core dump
 			break;
 		case QtCriticalMsg:
-			fprintf( stderr, "Critical: %s\n", msg );
+			fprintf( stderr, "Critical: %s\n", qPrintable(msg) );
 			break;
 			/*
 			  case QtSystemMsg:
-			  fprintf( stderr, "System: %s\n", msg );
+			  fprintf( stderr, "System: %s\n", qPrintable(msg) );
 			  break;
 			*/
 	}
@@ -60,7 +61,7 @@ void myMessageOutput( QtMsgType type, const char *msg )
 
 int main( int argc, char **argv )
 {
-	qInstallMsgHandler( myMessageOutput );
+	qInstallMessageHandler( myMessageOutput );
 
 	QApplication app(argc, argv);
 
