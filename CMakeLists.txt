@@ -49,21 +49,13 @@ FIND_PACKAGE( Qt5Core REQUIRED )
 FIND_PACKAGE( Qt5Network REQUIRED )
 FIND_PACKAGE( Qt5Gui REQUIRED )
 FIND_PACKAGE( Qt5Widgets REQUIRED )
-  
-FIND_PACKAGE( Gettext REQUIRED )
-IF (GETTEXT_FOUND)
-  MESSAGE(STATUS "Found Gettext: ${GETTEXT_SOURCE}")
-  INCLUDE_DIRECTORIES(${GETTEXT_INCLUDE_DIR})
-ELSE (GETTEXT_FOUND)
-  MESSAGE( FATAL_ERROR "Gettext not found" )
-ENDIF (GETTEXT_FOUND)
 
 # add some useful macros and variables
 # (QT_USE_FILE is a variable defined by FIND_PACKAGE( Qt4 ) that contains a path to CMake script)
 #INCLUDE( ${QT_USE_FILE} )
   
 # this will run uic on .ui files:
-QT5_WRAP_UI( KTW_UI_HDRS ${KTW_UIS} OPTIONS -tr ki18n)
+QT5_WRAP_UI( KTW_UI_HDRS ${KTW_UIS} OPTIONS -tr QObject::tr)
   
 # and finally this will run moc:
 QT5_WRAP_CPP( KTW_MOC_SRCS ${KTW_MOC_HDRS} )
@@ -88,15 +80,6 @@ ELSE(NOT RET)
       MESSAGE(STATUS "krb5 libs not found ${KRB5-LIBS} ${RET}")
 ENDIF (NOT RET)
 
-FIND_PROGRAM (CREATEPOT createPot ${CMAKE_SOURCE_DIR}/po)
-IF (NOT CREATEPOT)
-      MESSAGE(FATAL_ERROR "createPot not found")
-ENDIF (NOT CREATEPOT)
- 
-ADD_CUSTOM_TARGET(pot ${CREATEPOT} ${CMAKE_SOURCE_DIR}/po
-                  DEPENDS krb5-ticket-watcher)
-ADD_CUSTOM_TARGET(backupclean find ${CMAKE_SOURCE_DIR} -name "*~" -print0 | xargs -0 rm -f )
-
 # here we instruct CMake to build "krb5-ticket-watcher" executable from all of the source files
 ADD_EXECUTABLE( krb5-ticket-watcher ${KTW_SRCS} ${KTW_MOC_SRCS} ${KTW_RC_SRCS} ${KTW_UI_HDRS} )
 qt5_use_modules(krb5-ticket-watcher Core Gui Widgets Network)
@@ -110,8 +93,6 @@ TARGET_LINK_LIBRARIES( krb5-ticket-watcher ${LIBS} )
 INSTALL( TARGETS krb5-ticket-watcher RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 INSTALL( FILES ${CMAKE_SOURCE_DIR}/krb5-ticket-watcher.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications/ )
 INSTALL( FILES ${CMAKE_SOURCE_DIR}/krb5-ticket-watcher.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/ )
-
-ADD_SUBDIRECTORY( po )
 
 SET (CPACK_SOURCE_IGNORE_FILES
   #svn files

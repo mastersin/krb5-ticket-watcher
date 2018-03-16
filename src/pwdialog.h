@@ -5,8 +5,6 @@
 #include <QString>
 #include <QLineEdit>
 
-#include "krb5_tw_gettext.h"
-
 #include "ui_pwdialog.h"
 
 class PWDialog : public QDialog, private Ui::PWDialog

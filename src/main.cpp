@@ -76,8 +76,8 @@ int main( int argc, char **argv )
 		systray_available = QSystemTrayIcon::isSystemTrayAvailable();
 	    }
 	    if( !systray_available ) {
-		QMessageBox::critical(0, ki18n("Systray"),
-		                      ki18n("I couldn't detect any system tray "
+		QMessageBox::critical(0, QObject::tr("Systray"),
+		                      QObject::tr("I couldn't detect any system tray "
 								   "on this system."));
 		return 1;
 	    }

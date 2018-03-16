@@ -4,8 +4,6 @@
 #include <QDialog>
 #include <QString>
 
-#include "krb5_tw_gettext.h"
-
 #include "ui_pwchangedialog.h"
 
 class PWChangeDialog : public QDialog, private Ui::PWChangeDialog
